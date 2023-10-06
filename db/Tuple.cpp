@@ -6,38 +6,44 @@ using namespace db;
 // Tuple
 //
 
-// TODO pa1.1: implement
 Tuple::Tuple(const TupleDesc &td, RecordId *rid) {
+    tupleDesc = td;
+    recordId = rid;
+    // create fields vector with empty slots
+    fields = std::vector<const Field*>(td.numFields(), nullptr);
 }
 
 const TupleDesc &Tuple::getTupleDesc() const {
-    // TODO pa1.1: implement
+    return tupleDesc;
 }
 
 const RecordId *Tuple::getRecordId() const {
-    // TODO pa1.1: implement
+    return recordId;
 }
 
 void Tuple::setRecordId(const RecordId *id) {
-    // TODO pa1.1: implement
+    recordId = id;
 }
 
 const Field &Tuple::getField(int i) const {
-    // TODO pa1.1: implement
+    // assumes that a valid index is passed
+    return *fields[i];
 }
 
 void Tuple::setField(int i, const Field *f) {
-    // TODO pa1.1: implement
+    // assumes a valid index is passed
+    fields[i] = f;
 }
 
 Tuple::iterator Tuple::begin() const {
-    // TODO pa1.1: implement
+    return fields.begin();
 }
 
 Tuple::iterator Tuple::end() const {
-    // TODO pa1.1: implement
+    return fields.end();
 }
 
 std::string Tuple::to_string() const {
     // TODO pa1.1: implement
+    
 }

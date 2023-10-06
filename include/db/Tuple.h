@@ -13,7 +13,12 @@ namespace db {
      */
     class Tuple {
         // TODO pa1.1: add private members
-        using iterator = std::vector<Field*>::iterator; // replace this with a container iterator or a custom iterator implementation
+        TupleDesc tupleDesc; // Holds the schema of this tuple
+        const RecordId *recordId; // Holds the RecordId of the tuple (location of this tuple on disk)
+        std::vector<const Field*> fields; // Holds the Field objects with the data for each field 
+
+        using iterator = std::vector<const Field*>::const_iterator; // replace this with a container iterator or a custom iterator implementation
+
     public:
         Tuple() = default;
 
