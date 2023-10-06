@@ -1,7 +1,6 @@
 #ifndef DB_CATALOG_H
 #define DB_CATALOG_H
 
-#include <unordered_map>
 #include <db/TupleDesc.h>
 #include <db/DbFile.h>
 #include <db/Utility.h>
@@ -25,8 +24,7 @@ namespace db {
      */
     class Catalog {
         // TODO pa1.2: add private members
-        std::unordered_map<int, Table> tablesById;
-        std::unordered_map<std::string, int> idByName;
+        std::vector<Table> tables;  // All tables
     public:
         // disable copy
         Catalog(const Catalog &) = delete;
