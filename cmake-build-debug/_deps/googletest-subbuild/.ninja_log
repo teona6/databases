@@ -1,0 +1,21 @@
+# ninja log v5
+1	7	1695851035362842828	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-mkdir	382fc8f718ff0e42
+1	7	1695851035362842828	/home/teona/Documents/courses/CS660/cs660-pa/cmake-build-debug/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-mkdir	382fc8f718ff0e42
+8	800	1695851036158851052	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-download	bcdb646e9acae692
+8	800	1695851036158851052	/home/teona/Documents/courses/CS660/cs660-pa/cmake-build-debug/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-download	bcdb646e9acae692
+800	804	1695851036158851052	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-update	283d017797748363
+800	804	1695851036158851052	/home/teona/Documents/courses/CS660/cs660-pa/cmake-build-debug/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-update	283d017797748363
+804	806	1695851036162851093	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-patch	ab199c818efd9f3d
+804	806	1695851036162851093	/home/teona/Documents/courses/CS660/cs660-pa/cmake-build-debug/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-patch	ab199c818efd9f3d
+806	810	1695851036166851134	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-configure	8ab15f282a9c6de7
+806	810	1695851036166851134	/home/teona/Documents/courses/CS660/cs660-pa/cmake-build-debug/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-configure	8ab15f282a9c6de7
+810	814	1695851036170851175	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-build	80dea05a22f1826
+810	814	1695851036170851175	/home/teona/Documents/courses/CS660/cs660-pa/cmake-build-debug/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-build	80dea05a22f1826
+814	817	1695851036174851217	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-install	bfa5794d01228734
+814	817	1695851036174851217	/home/teona/Documents/courses/CS660/cs660-pa/cmake-build-debug/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-install	bfa5794d01228734
+817	821	1695851036178851258	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-test	6adb75f5f7dab905
+817	821	1695851036178851258	/home/teona/Documents/courses/CS660/cs660-pa/cmake-build-debug/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-test	6adb75f5f7dab905
+821	825	1695851036182851299	CMakeFiles/googletest-populate-complete	f4df7d1c525c1875
+821	825	1695851036182851299	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-done	f4df7d1c525c1875
+821	825	1695851036182851299	/home/teona/Documents/courses/CS660/cs660-pa/cmake-build-debug/_deps/googletest-subbuild/CMakeFiles/googletest-populate-complete	f4df7d1c525c1875
+821	825	1695851036182851299	/home/teona/Documents/courses/CS660/cs660-pa/cmake-build-debug/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-done	f4df7d1c525c1875
