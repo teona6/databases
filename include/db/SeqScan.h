@@ -13,7 +13,6 @@
 namespace db {
     class SeqScanIterator {
         // TODO pa1.6: add private members
-        
     public:
         SeqScanIterator(/* TODO pa1.6: add parameters */);
 

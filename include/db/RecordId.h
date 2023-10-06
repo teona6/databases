@@ -13,8 +13,6 @@ namespace db {
      */
     class RecordId {
         // TODO pa1.4: add private members
-        const PageId *pid;
-        int tupleno;
     public:
         RecordId() = default;
         /**

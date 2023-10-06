@@ -5,8 +5,8 @@
 #include <db/TupleDesc.h>
 #include <db/DbFile.h>
 #include <db/SkeletonFile.h>
-#include "db/HeapFile.h"
-#include "db/SeqScan.h"
+#include <db/HeapFile.h>
+#include <db/SeqScan.h>
 
 TEST(SeqScanTest, IterateFile) {
     std::vector<db::Types::Type> types = {db::Types::INT_TYPE, db::Types::INT_TYPE, db::Types::INT_TYPE};

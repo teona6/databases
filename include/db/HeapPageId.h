@@ -10,8 +10,7 @@ namespace db {
      * Unique identifier for HeapPage objects.
      */
     class HeapPageId : public PageId {
-        int tableId;
-        int pgNo;
+        // TODO pa1.4: Add private members
     public:
         /**
          * Constructor. Create a page id structure for a specific page of a

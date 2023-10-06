@@ -6,21 +6,21 @@ using namespace db;
 // HeapPageId
 //
 
-HeapPageId::HeapPageId(int tableId, int pgNo)
-    : tableId(tableId), pgNo(pgNo) {
+// TODO pa1.4: implement
+HeapPageId::HeapPageId(int tableId, int pgNo) {
 }
 
 int HeapPageId::getTableId() const {
-    return tableId;
+    // TODO pa1.4: implement
 }
 
 int HeapPageId::pageNumber() const {
-    return pgNo;
+    // TODO pa1.4: implement
 }
 
 bool HeapPageId::operator==(const PageId &other) const {
     if (const auto *otherPageId = dynamic_cast<const HeapPageId *>(&other)) {
-        return tableId == otherPageId->tableId && pgNo == otherPageId->pgNo;
+        // TODO pa1.4: implement
     }
     return false;
 }

@@ -7,28 +7,26 @@ using namespace db;
 // RecordId
 //
 
+// TODO pa1.4: implement
 RecordId::RecordId(const PageId *pid, int tupleno) {
-    if (pid == nullptr) {
-        throw std::invalid_argument("PageId cannot be nullptr");
-    }
-    this->pid = pid;
-    this->tupleno = tupleno;
 }
 
 bool RecordId::operator==(const RecordId &other) const {
-    return (*this->pid == *other.pid && this->tupleno == other.tupleno);
+    // TODO pa1.4: implement
 }
 
 const PageId *RecordId::getPageId() const {
-    return pid;
+    // TODO pa1.4: implement
 }
 
 int RecordId::getTupleno() const {
-    return tupleno;
+    // TODO pa1.4: implement
 }
 
+//
+// RecordId hash function
+//
+
 std::size_t std::hash<RecordId>::operator()(const RecordId &r) const {
-    std::hash<PageId> pidHasher; // Assuming PageId has a suitable hash function
-    std::hash<int> tuplenoHasher;
-    return pidHasher(*r.getPageId()) ^ tuplenoHasher(r.getTupleno());
+    // TODO pa1.4: implement
 }

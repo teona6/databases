@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/io.dir/io.cpp.o -o io  ../db/libdb.a 

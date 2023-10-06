@@ -1,5 +1,5 @@
 #include <db/HeapPage.h>
-#include <cmath>
+
 using namespace db;
 
 HeapPageIterator::HeapPageIterator(int i, const HeapPage *page) {
@@ -45,17 +45,15 @@ HeapPage::HeapPage(const HeapPageId &id, uint8_t *data) : pid(id) {
 }
 
 int HeapPage::getNumTuples() {
-    int tupleSize = td.getSize();
-    int pageSize = Database::getBufferPool().getPageSize();
-    return std::floor((pageSize * 8) / (tupleSize * 8 + 1));
+    // TODO pa1.4: implement
 }
 
 int HeapPage::getHeaderSize() {
-    return std::ceil(static_cast<double>(numSlots) / 8);
+    // TODO pa1.4: implement
 }
 
 PageId &HeapPage::getId() {
-    return pid;
+    // TODO pa1.4: implement
 }
 
 void HeapPage::readTuple(Tuple *t, uint8_t *data, int slotId) {
@@ -103,28 +101,17 @@ uint8_t *HeapPage::createEmptyPageData() {
 }
 
 int HeapPage::getNumEmptySlots() const {
-    int count = 0;
-    for (int i = 0; i < numSlots; i++) {
-        if (!isSlotUsed(i)) {
-            count++;
-        }
-    }
-    return count;
+    // TODO pa1.4: implement
 }
 
 bool HeapPage::isSlotUsed(int i) const {
-    if (i < 0 || i >= numSlots) {
-        throw std::out_of_range("Slot index out of range");
-    }
-    int byteIndex = i / 8;
-    int bitIndex = i % 8;
-    return (header[byteIndex] & (1 << bitIndex)) != 0;
+    // TODO pa1.4: implement
 }
 
 HeapPageIterator HeapPage::begin() const {
-    return HeapPageIterator(0, this);
+    // TODO pa1.4: implement
 }
 
 HeapPageIterator HeapPage::end() const {
-    return HeapPageIterator(numSlots, this);
+    // TODO pa1.4: implement
 }

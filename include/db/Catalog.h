@@ -4,7 +4,7 @@
 #include <db/TupleDesc.h>
 #include <db/DbFile.h>
 #include <db/Utility.h>
-#include <unordered_map>
+
 namespace db {
 
     struct Table {
@@ -23,9 +23,7 @@ namespace db {
      * to a catalog that reads a catalog table from disk.
      */
     class Catalog {
-        //TODO I also added unordered_map above
-        std::unordered_map<int, Table> tablesById;
-        std::unordered_map<std::string, int> idByName;
+        // TODO pa1.2: add private members
     public:
         // disable copy
         Catalog(const Catalog &) = delete;
