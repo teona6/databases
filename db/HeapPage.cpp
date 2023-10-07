@@ -1,4 +1,5 @@
 #include <db/HeapPage.h>
+#include <cmath>
 
 using namespace db;
 
@@ -45,15 +46,15 @@ HeapPage::HeapPage(const HeapPageId &id, uint8_t *data) : pid(id) {
 }
 
 int HeapPage::getNumTuples() {
-    // TODO pa1.4: implement
+    return floor((Database::getBufferPool().getPageSize() * 8.0) / (td.getSize() * 8 + 1));  
 }
 
 int HeapPage::getHeaderSize() {
-    // TODO pa1.4: implement
+    return Database::getBufferPool().getPageSize() - getNumTuples() * td.getSize();
 }
 
 PageId &HeapPage::getId() {
-    // TODO pa1.4: implement
+    return pid;
 }
 
 void HeapPage::readTuple(Tuple *t, uint8_t *data, int slotId) {
@@ -101,17 +102,32 @@ uint8_t *HeapPage::createEmptyPageData() {
 }
 
 int HeapPage::getNumEmptySlots() const {
-    // TODO pa1.4: implement
+    int count = 0;
+    for (int i = 0; i < numSlots; ++i) {
+        if (!isSlotUsed(i)) {
+            count++;
+        }
+    }
+    return count;
 }
 
 bool HeapPage::isSlotUsed(int i) const {
     // TODO pa1.4: implement
+    // Determine which byte in the header the desired bit resides in.
+    int byteNumber = i / 8;
+    // Determine the position of the desired bit in the above byte.
+    int bitPosition = i % 8;
+
+    // Check if the bit is set.
+    return (header[byteNumber] & (1 << bitPosition)) != 0;
 }
 
 HeapPageIterator HeapPage::begin() const {
     // TODO pa1.4: implement
+    return HeapPageIterator(0, this);
 }
 
 HeapPageIterator HeapPage::end() const {
     // TODO pa1.4: implement
+    return HeapPageIterator(numSlots, this);
 }
