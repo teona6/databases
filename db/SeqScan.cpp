@@ -63,19 +63,20 @@ SeqScanIterator::SeqScanIterator(DbFile& file, TransactionId* t, int position) {
     this->dbFile = &file;
     this->tid = t;
     this->currentPosition = position;
-    if (currentPosition != -1) {
-        // If the position is not -1, advance to the desired position
+    if (currentPosition == 0) {
         heapFileIt = dynamic_cast<HeapFile&>(file).begin();
-        for (int i = 0; i < currentPosition; ++i) {
-            ++heapFileIt;
-        }
+    } else if (currentPosition == -1) {
+        heapFileIt = dynamic_cast<HeapFile&>(file).end();
+    } else {
+        // Handle other positions if needed
+        // You might add logic for other valid positions here
     }
-}
 
+}
 
 bool SeqScanIterator::operator!=(const SeqScanIterator &other) const {
     // TODO pa1.6: implement
-    return heapFileIt != other.heapFileIt;
+    return this->heapFileIt != other.heapFileIt;
 }
 
 SeqScanIterator &SeqScanIterator::operator++() {

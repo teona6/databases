@@ -70,8 +70,13 @@ HeapFileIterator HeapFile::begin() const {
 }
 
 HeapFileIterator HeapFile::end() const {
-    // TODO pa1.5: implement
-    return HeapFileIterator(*this, const_cast<HeapFile*>(this)->getNumPages(), 0);
+    int lastPage = const_cast<HeapFile*>(this)->getNumPages() - 1;  // The actual last page number
+    HeapPageId pid(getId(), lastPage);
+    auto rawPage = Database::getBufferPool().getPage(TransactionId(), &pid);
+    HeapPage *lastHeapPage = dynamic_cast<HeapPage*>(rawPage);
+    int lastTuple = lastHeapPage->getNumTuples() - 1;  // The actual last tuple number in the last page
+
+    return HeapFileIterator(*this, lastPage, lastTuple); 
 }
 
 //
@@ -79,14 +84,13 @@ HeapFileIterator HeapFile::end() const {
 //
 
 // TODO pa1.5: implement
-HeapFileIterator::HeapFileIterator(const HeapFile &file, int page = 0, int tuple = 0){
+HeapFileIterator::HeapFileIterator(const HeapFile &file, int page, int tuple) {
     heapFile = &file;
-    currentPage = page;
-    currentTuple = tuple;
+    this->currentPage = page;
+    this->currentTuple = tuple;
 }
 
 bool HeapFileIterator::operator!=(const HeapFileIterator &other) const {
-    // TODO pa1.5: implement
     return this->currentPage != other.currentPage || this->currentTuple != other.currentTuple;
 }
 
@@ -99,18 +103,27 @@ Tuple &HeapFileIterator::operator*() const {
 }
 
 HeapFileIterator &HeapFileIterator::operator++() {
-    // TODO pa1.5: implement
-    currentTuple++;
+    // Get the current page
     HeapPageId pid(heapFile->getId(), currentPage);
     HeapPage *page = dynamic_cast<HeapPage*>(Database::getBufferPool().getPage(TransactionId(), &pid));
-    
-    while (currentPage < const_cast<HeapFile*>(heapFile)->getNumPages() && currentTuple >= page->getNumTuples()) {
-        currentTuple = 0;
-        currentPage++;
-        if (currentPage < const_cast<HeapFile*>(heapFile)->getNumPages()) {
-            page = dynamic_cast<HeapPage*>(Database::getBufferPool().getPage(TransactionId(), &pid));
+
+    int totalTuplesInCurrentPage = page->getNumTuples(); 
+
+    if (currentTuple < totalTuplesInCurrentPage - 1) {
+        currentTuple++;
+    }else {
+        int numPages = const_cast<HeapFile*>(heapFile)->getNumPages();
+        if (currentPage < numPages - 1) { 
+            currentPage++;
+            currentTuple = 0;
+        }
+        // If we're on the last page and last tuple, set to the 'end' values
+        else {
+            currentPage = numPages;
+            currentTuple = 0;
         }
     }
+
     return *this;
-    
 }
+
