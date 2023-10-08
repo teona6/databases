@@ -28,7 +28,10 @@ namespace db {
         static constexpr int PAGE_SIZE = 4096;
         /** Bytes per page, including header. */
         int pageSize = PAGE_SIZE;
-        // TODO pa1.3: add private members
+        Page** pageArray;
+        PageId** pageIdArray; 
+        int numPages;
+        int currentPageCount;  
     public:
         BufferPool(const BufferPool &) = delete;
 

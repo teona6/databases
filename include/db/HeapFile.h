@@ -1,3 +1,5 @@
+#ifndef DB_HEAPFILE_H
+#define DB_HEAPFILE_H
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -9,10 +11,18 @@
 #include <db/HeapPage.h>
 
 namespace db {
+    class HeapFile;  // forward declaration
     class HeapFileIterator {
         // TODO pa1.5: add private members
+        const HeapFile *heapFile;
+        int currentPage;
+        int currentTuple;
+        int totalTuples;
+
     public:
-        HeapFileIterator(/* TODO pa1.5: add parameters */);
+        // TODO add parameters
+        HeapFileIterator() : heapFile(nullptr), currentPage(0), currentTuple(0), totalTuples(0) {}
+        HeapFileIterator(const HeapFile &file, int page, int tuple);
         bool operator!=(const HeapFileIterator &other) const;
 
         Tuple &operator*() const;
@@ -32,6 +42,10 @@ namespace db {
      */
     class HeapFile : public DbFile {
         // TODO pa1.5: add private members
+        std::fstream file; // File stream for read/write operations
+        TupleDesc td; // Tuple descriptor for tuples in this file
+        int heapFID;
+        std::string fname;
     public:
 
         /**
@@ -69,3 +83,4 @@ namespace db {
         HeapFileIterator end() const;
     };
 }
+#endif
