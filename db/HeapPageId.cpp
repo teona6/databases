@@ -6,19 +6,16 @@ using namespace db;
 // HeapPageId
 //
 
-// TODO pa1.4: implement
 HeapPageId::HeapPageId(int tableId, int pgNo) {
     this->tableId = tableId;
     this->pgNo = pgNo;
 }
 
 int HeapPageId::getTableId() const {
-    // TODO pa1.4: implement
     return tableId;
 }
 
 int HeapPageId::pageNumber() const {
-    // TODO pa1.4: implement
     return pgNo;
 }
 

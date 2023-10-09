@@ -27,11 +27,13 @@ void Tuple::setRecordId(const RecordId *id) {
 
 const Field &Tuple::getField(int i) const {
     // assumes that a valid index is passed
+    // later need to add error handling
     return *fields[i];
 }
 
 void Tuple::setField(int i, const Field *f) {
     // assumes a valid index is passed
+    // later need to add error handling
     fields[i] = f;
 }
 
@@ -44,6 +46,6 @@ Tuple::iterator Tuple::end() const {
 }
 
 std::string Tuple::to_string() const {
-    // TODO pa1.1: implement
+    // not needed for this assignment
     
 }

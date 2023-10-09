@@ -2,7 +2,6 @@
 
 using namespace db;
 
-// TODO pa1.6: implement
 SeqScan::SeqScan(TransactionId *tid, int tableid, const std::string &tableAlias) {
     this->tid = tid;
     this->tableid = tableid;
@@ -10,24 +9,20 @@ SeqScan::SeqScan(TransactionId *tid, int tableid, const std::string &tableAlias)
 }
 
 std::string SeqScan::getTableName() const {
-    // TODO pa1.6: implement
     return Database::getCatalog().getTableName(tableid);
     
 }
 
 std::string SeqScan::getAlias() const {
-    // TODO pa1.6: implement
     return tableAlias;
 }
 
 void SeqScan::reset(int tabid, const std::string &tableAlias) {
-    // TODO pa1.6: implement
     this->tableid = tabid;
     this->tableAlias = tableAlias;
 }
 
 const TupleDesc &SeqScan::getTupleDesc() const {
-    // TODO pa1.6: implement
     const TupleDesc& originalDesc = Database::getCatalog().getDatabaseFile(tableid)->getTupleDesc();
 
     // Extract field types and names from the originalDesc
@@ -36,7 +31,7 @@ const TupleDesc &SeqScan::getTupleDesc() const {
 
     for (size_t i = 0; i < originalDesc.numFields(); ++i) {
         fieldTypes.push_back(originalDesc.getFieldType(i));
-        fieldNames.push_back(tableAlias + "." + originalDesc.getFieldName(i));
+        fieldNames.push_back(tableAlias + "_" + originalDesc.getFieldName(i));
     }
 
     // Create a new TupleDesc with updated field names and return it
@@ -44,12 +39,10 @@ const TupleDesc &SeqScan::getTupleDesc() const {
 }
 
 SeqScan::iterator SeqScan::begin() const {
-    // TODO pa1.6: implement
     return SeqScanIterator(*Database::getCatalog().getDatabaseFile(tableid), tid, 0);
 }
 
 SeqScan::iterator SeqScan::end() const {
-    // TODO pa1.6: implement
     return SeqScanIterator(*Database::getCatalog().getDatabaseFile(tableid), tid, -1);
     
 }
@@ -58,34 +51,27 @@ SeqScan::iterator SeqScan::end() const {
 // SeqScanIterator
 //
 
-// TODO pa1.6: implement
 SeqScanIterator::SeqScanIterator(DbFile& file, TransactionId* t, int position) {
     this->dbFile = &file;
     this->tid = t;
     this->currentPosition = position;
+    // NOTE: with current implementation iterator has to start at the beginning and go to end
     if (currentPosition == 0) {
         heapFileIt = dynamic_cast<HeapFile&>(file).begin();
     } else if (currentPosition == -1) {
         heapFileIt = dynamic_cast<HeapFile&>(file).end();
-    } else {
-        // Handle other positions if needed
-        // You might add logic for other valid positions here
     }
-
 }
 
 bool SeqScanIterator::operator!=(const SeqScanIterator &other) const {
-    // TODO pa1.6: implement
     return this->heapFileIt != other.heapFileIt;
 }
 
 SeqScanIterator &SeqScanIterator::operator++() {
-    // TODO pa1.6: implement
     ++heapFileIt;
     return *this;
 }
 
 const Tuple &SeqScanIterator::operator*() const {
-    // TODO pa1.6: implement
     return *heapFileIt;
 }

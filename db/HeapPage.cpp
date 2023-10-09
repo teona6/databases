@@ -98,7 +98,7 @@ void *HeapPage::getPageData() {
 
 uint8_t *HeapPage::createEmptyPageData() {
     int len = Database::getBufferPool().getPageSize();
-    return new uint8_t[len]{}; // all 0
+    return new uint8_t[len]{};
 }
 
 int HeapPage::getNumEmptySlots() const {
@@ -112,22 +112,14 @@ int HeapPage::getNumEmptySlots() const {
 }
 
 bool HeapPage::isSlotUsed(int i) const {
-    // TODO pa1.4: implement
-    // Determine which byte in the header the desired bit resides in.
-    int byteNumber = i / 8;
-    // Determine the position of the desired bit in the above byte.
-    int bitPosition = i % 8;
-
     // Check if the bit is set.
-    return (header[byteNumber] & (1 << bitPosition)) != 0;
+    return (header[i / 8] & (1 << i % 8)) != 0;
 }
 
 HeapPageIterator HeapPage::begin() const {
-    // TODO pa1.4: implement
     return HeapPageIterator(0, this);
 }
 
 HeapPageIterator HeapPage::end() const {
-    // TODO pa1.4: implement
     return HeapPageIterator(numSlots, this);
 }

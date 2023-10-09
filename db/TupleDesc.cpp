@@ -12,7 +12,9 @@ bool TDItem::operator==(const TDItem &other) const {
 }
 
 std::size_t std::hash<db::TDItem>::operator()(const db::TDItem &item) const {
+    // hash the field type
     size_t h1 = std::hash<Types::Type>()(item.fieldType);
+    // hash the field name
     size_t h2 = std::hash<std::string>()(item.fieldName);
     return h1 ^ h2;
 }
@@ -119,12 +121,10 @@ bool TupleDesc::operator==(const TupleDesc &other) const {
 }
 
 TupleDesc::iterator TupleDesc::begin() const {
-    // TODO pa1.1: implement
     tditems.begin();
 }
 
 TupleDesc::iterator TupleDesc::end() const {
-    // TODO pa1.1: implement
     tditems.end();
 }
 

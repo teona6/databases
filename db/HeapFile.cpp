@@ -14,7 +14,6 @@ using namespace db;
 // HeapFile
 //
 
-// TODO pa1.5: implement
 HeapFile::HeapFile(const char *fname, const TupleDesc &td) {
     this->td = td;
     this->heapFID = std::hash<std::string>{}(std::string(fname));
@@ -22,59 +21,49 @@ HeapFile::HeapFile(const char *fname, const TupleDesc &td) {
 }
 
 int HeapFile::getId() const {
-    // TODO pa1.5: implement
     return heapFID;
 }
 
 const TupleDesc &HeapFile::getTupleDesc() const {
-    // TODO pa1.5: implement
     return td;
 }
 
 Page *HeapFile::readPage(const PageId &pid) {
-    // TODO pa1.5: implement
-
+    // retrieve page size
     int pageSize = Database::getBufferPool().getPageSize();
-
-    // Calculate the offset in the file based on the page number and the page size
-    off_t offset = static_cast<off_t>(pid.pageNumber()) * pageSize;
     std::ifstream file(fname, std::ios::binary | std::ios::in);
 
-    file.seekg(offset, std::ios::beg);
+    // Calculate the offset in the file based on the page number and the page size
+    file.seekg(pid.pageNumber() * pageSize, std::ios::beg);
     uint8_t *pageData = new uint8_t[pageSize];
     file.read(reinterpret_cast<char*>(pageData), pageSize);
-
     file.close();
 
-    // Create a new HeapPage instance with the read data and return it
+    // Create a new HeapPage instance 
     return new HeapPage(static_cast<const HeapPageId&>(pid), pageData);
 }
 
 int HeapFile::getNumPages () {
-    // TODO pa1.5: implement
-
     std::ifstream file(fname, std::ios::binary | std::ios::ate);
+    // get total file size and page size
     std::streamsize fileSize = file.tellg();
-
-    file.close();
-
     int pageSize = Database::getBufferPool().getPageSize();
 
-    return static_cast<int>(fileSize / pageSize);
+    return fileSize / pageSize;
 }
 
 HeapFileIterator HeapFile::begin() const {
-    // TODO pa1.5: implement
+    // iteration starts from the first page and first tuple
     return HeapFileIterator(*this, 0, 0);
     
 }
 
 HeapFileIterator HeapFile::end() const {
-    int lastPage = const_cast<HeapFile*>(this)->getNumPages() - 1;  // The actual last page number
+    // iteration goes up to the last page and last tuple
+    int lastPage = const_cast<HeapFile*>(this)->getNumPages();
     HeapPageId pid(getId(), lastPage);
-    auto rawPage = Database::getBufferPool().getPage(TransactionId(), &pid);
-    HeapPage *lastHeapPage = dynamic_cast<HeapPage*>(rawPage);
-    int lastTuple = lastHeapPage->getNumTuples() - 1;  // The actual last tuple number in the last page
+    HeapPage *lastHeapPage = dynamic_cast<HeapPage*>(Database::getBufferPool().getPage(TransactionId(), &pid));
+    int lastTuple = lastHeapPage->getNumTuples();
 
     return HeapFileIterator(*this, lastPage, lastTuple); 
 }
@@ -83,7 +72,6 @@ HeapFileIterator HeapFile::end() const {
 // HeapFileIterator
 //
 
-// TODO pa1.5: implement
 HeapFileIterator::HeapFileIterator(const HeapFile &file, int page, int tuple) {
     heapFile = &file;
     this->currentPage = page;
@@ -95,7 +83,7 @@ bool HeapFileIterator::operator!=(const HeapFileIterator &other) const {
 }
 
 Tuple &HeapFileIterator::operator*() const {
-    // TODO pa1.5: implement
+    // this operator for now will be pointing at the begining of the page
     HeapPageId pid(heapFile->getId(), currentPage);
     HeapPage *page = dynamic_cast<HeapPage*>(Database::getBufferPool().getPage(TransactionId(), &pid));
     HeapPageIterator it = page->begin();
@@ -106,18 +94,20 @@ HeapFileIterator &HeapFileIterator::operator++() {
     // Get the current page
     HeapPageId pid(heapFile->getId(), currentPage);
     HeapPage *page = dynamic_cast<HeapPage*>(Database::getBufferPool().getPage(TransactionId(), &pid));
+    int numTuples = page->getNumTuples(); 
 
-    int totalTuplesInCurrentPage = page->getNumTuples(); 
-
-    if (currentTuple < totalTuplesInCurrentPage - 1) {
+    // accumulate the tuples count
+    if (currentTuple < numTuples) {
         currentTuple++;
     }else {
+        // once we reach the last tuple move to the next page
         int numPages = const_cast<HeapFile*>(heapFile)->getNumPages();
-        if (currentPage < numPages - 1) { 
+        if (currentPage < numPages) { 
             currentPage++;
+            // reset the current tuple to 0 because we are moving to next page
             currentTuple = 0;
         }
-        // If we're on the last page and last tuple, set to the 'end' values
+        // If we're on the last page and last tuple, set the end values
         else {
             currentPage = numPages;
             currentTuple = 0;
